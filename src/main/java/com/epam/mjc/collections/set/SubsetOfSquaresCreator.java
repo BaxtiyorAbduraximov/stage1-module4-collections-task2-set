@@ -1,20 +1,16 @@
+
 package com.epam.mjc.collections.set;
 
 import java.util.List;
-import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class SubsetOfSquaresCreator {
     public Set<Integer> createSubsetOfSquares(List<Integer> sourceList, int lowerBound, int upperBound) {
-        TreeSet<Integer> squareSet = new TreeSet<>();
-
-        for (Integer x : sourceList) {
-            squareSet.add(x * x);
-        }
-
-        NavigableSet<Integer> subsetOfSquares = squareSet.subSet(lowerBound, true, upperBound, true);
-
-        return subsetOfSquares;
+        return sourceList.stream()
+                .map(x -> x * x)
+                .filter(x -> x >= lowerBound && x <= upperBound)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }
